@@ -44,7 +44,6 @@ class Enigma:
         return value
 
     def run(self):
-        # step 1: plugboard
         self.text = self.plugboard.apply()
         temp = []
         for i in range(1, len(self.text) +1):
