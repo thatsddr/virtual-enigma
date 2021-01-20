@@ -22,7 +22,7 @@ zusatzwalze = {
     "gamma": "fsokanuerhmbtiycwlqpzxvgjd",
 }
 
-#config file
+#config file, modify this
 config = {
     "rotors": {
         #rotors 1-3 + zusatzwalze configuration: specify the rotor type, starting position ang ringstellung (ring starting position)
@@ -44,5 +44,5 @@ config = {
 }
 
 #define an instance of the enigma machine with the config dict and your text
-e = Enigma(config, "The quick brown fox jumps over the lazy dog") 
+e = Enigma(config, "The quick brown fox jumps over the lazy dog")
 print(e.run()) #-> lzkn gulh hijm glft fauh ajff qdwg sics ach
