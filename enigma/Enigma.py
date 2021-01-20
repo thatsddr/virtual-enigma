@@ -2,6 +2,7 @@ from Plugboard import Plugboard
 from Reflector import Reflector
 from Rotor import Rotor
 
+
 class Enigma:
     def __init__(self, configObj, text):
         self.rotor1 = Rotor(configObj["rotors"]["rotor1"])
@@ -23,7 +24,6 @@ class Enigma:
         self.iteration += 1
 
     def encryptLetter(self, letter):
-
         value = self.rotor1.return_reverse(
             self.rotor2.return_reverse(
                 self.rotor3.return_reverse(
@@ -41,16 +41,17 @@ class Enigma:
                 )
             )
         )
+        
         return value
 
     def run(self):
         self.text = self.plugboard.apply()
         temp = []
-        for i in range(1, len(self.text) +1):
+        for i in range(1, len(self.text) + 1):
             self.rotateRotors()
-            temp.append(self.encryptLetter(self.text[i-1]))
-            if i%4 == 0:
+            temp.append(self.encryptLetter(self.text[i - 1]))
+            if i % 4 == 0:
                 temp.append(" ")
         tempstr = "".join(temp)
         self.plugboard2 = Plugboard(self.plugboardConfig, tempstr)
-        return(self.plugboard2.apply())
+        return self.plugboard2.apply()
