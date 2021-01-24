@@ -3,6 +3,5 @@ class Reflector:
         self.type = ukw_type
         self.alphabet = "abcdefghijklmnopqrstuvwxyz"
     
-    def reflect_letter(self, letter):
-        index = self.alphabet.index(letter)
-        return self.type[index]
+    def reflect(self, letter, zusStep):
+        return self.type[(26 - (zusStep - self.alphabet.index(letter))) % 26]

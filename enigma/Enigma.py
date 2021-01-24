@@ -28,7 +28,7 @@ class Enigma:
         v2= self.rotor2.left_mov(v1, self.rotor1.steps)
         v3 = self.rotor3.left_mov(v2, self.rotor2.steps)
         v4 = self.zusatzwalze.left_mov(v3, self.rotor3.steps)
-        v5 = self.reflector.reflect_letter(v4)
+        v5 = self.reflector.reflect(v4, self.zusatzwalze.steps)
         v6 = self.zusatzwalze.right_mov(v5)
         v7 = self.rotor3.right_mov(v6)
         v8 = self.rotor2.right_mov(v7)
@@ -45,8 +45,8 @@ class Enigma:
         print(f"{self.rotor3.alphabet.upper()}\n{self.rotor3.rotor.upper()}\nAfter rotor 3: {v3.upper()}\nprev: {self.rotor2.steps}\n")
         v4 = self.zusatzwalze.left_mov(v3, self.rotor3.steps)
         print(f"{self.zusatzwalze.alphabet.upper()}\n{self.zusatzwalze.rotor.upper()}\nAfter zusatzwalze: {v4.upper()}\nprev: {self.rotor3.steps}\n")
-        v5 = self.reflector.reflect_letter(v4)
-        print(f"{self.rotor1.alphabet}\n{self.reflector.type}\nAfter reflector: {v5.upper()}\n")
+        v5 = self.reflector.reflect(v4, self.zusatzwalze.steps)
+        print(f"{self.rotor1.alphabet}\n{self.reflector.type}\nAfter reflector: {v5.upper()}\nprev: {self.zusatzwalze.steps}\n")
         v6 = self.zusatzwalze.right_mov(v5)
         print(f"{self.zusatzwalze.rotor.upper()}\n{self.zusatzwalze.alphabet.upper()}\nAfter inversed zusatzwalze: {v6.upper()}\n")
         v7 = self.rotor3.right_mov(v6)
@@ -56,7 +56,6 @@ class Enigma:
         v9 = self.rotor1.right_mov(v8)
         print(f"{self.rotor1.rotor.upper()}\n{self.rotor1.alphabet.upper()}\nAfter inversed rotor 1: {v9.upper()}\n")
         print("--------------------------")
-
         return v9
 
     def run(self, logging=False):
