@@ -42,7 +42,22 @@ config = {
     "plugboard": ["fa", "hb", "er", "gv", "ip", "nz", "qt", "uj", "xm", "wl"],
 }
 
-# allows to use letters instead of numbers as rotors and rings positions
+conf2 = {
+    "rotors": {
+        "rotor1": {"rotor": rotors["I"], "starting_pos": 0, "ringstellung": 1},
+        "rotor2": {"rotor": rotors["II"], "starting_pos": 0, "ringstellung": 2},
+        "rotor3": {"rotor": rotors["III"], "starting_pos": 0, "ringstellung": 0},
+        "zusatzwalze": {
+            "rotor": zusatzwalze["beta"],
+            "starting_pos": 0,
+            "ringstellung": 0,
+        },
+    },
+    "reflector": reflectors["UKW-B-thin"],
+    "plugboard": ["ah"],
+}
+
+#allows to use letters instead of numbers as rotors and rings positions
 def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     return {
@@ -72,17 +87,8 @@ def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
         },
     }
 
-
-# example of usage of the function above
-cx = confMaker(
-    "UKW-B-thin",
-    {"rot": "beta", "pos": "c", "ring": "d"},
-    {"rot": "III", "pos": "c", "ring": "d"},
-    {"rot": "II", "pos": "c", "ring": "d"},
-    {"rot": "I", "pos": "c", "ring": "d"},
-    plugboard=["ah"],
-)
+cx = confMaker("UKW-B-thin", {"rot":"beta", "pos":"c", "ring":"d"}, {"rot":"III", "pos":"c", "ring":"d"}, {"rot":"II", "pos":"c", "ring":"d"}, {"rot":"I", "pos":"c", "ring":"d"}, plugboard=["ah"])
 
 # define an instance of the enigma machine with the config dict and your text
-e = Enigma(cx, "testing")
-print(e.run())
+e = Enigma(conf2, "testing")
+print(e.run(logging=True))
