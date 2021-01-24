@@ -45,7 +45,7 @@ config = {
 conf2 = {
     "rotors": {
         "rotor1": {"rotor": rotors["I"], "starting_pos": 0, "ringstellung": 1},
-        "rotor2": {"rotor": rotors["II"], "starting_pos": 0, "ringstellung": 0},
+        "rotor2": {"rotor": rotors["II"], "starting_pos": 0, "ringstellung": 2},
         "rotor3": {"rotor": rotors["III"], "starting_pos": 0, "ringstellung": 0},
         "zusatzwalze": {
             "rotor": zusatzwalze["beta"],
@@ -54,9 +54,41 @@ conf2 = {
         },
     },
     "reflector": reflectors["UKW-B-thin"],
+    "plugboard": ["ah"],
 }
 
+#allows to use letters instead of numbers as rotors and rings positions
+def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    return {
+        "reflector": reflectors[reflector],
+        "plugboard": plugboard,
+        "rotors": {
+            "zusatzwalze": {
+                "rotor": zusatzwalze[zus.get("rot")],
+                "starting_pos": alphabet.index(zus.get("pos").lower()),
+                "ringstellung": alphabet.index(zus.get("ring").lower()),
+            },
+            "rotor3": {
+                "rotor": rotors[rot3.get("rot")],
+                "starting_pos": alphabet.index(rot3.get("pos").lower()),
+                "ringstellung": alphabet.index(rot3.get("ring").lower()),
+            },
+            "rotor2": {
+                "rotor": rotors[rot2.get("rot")],
+                "starting_pos": alphabet.index(rot2.get("pos").lower()),
+                "ringstellung": alphabet.index(rot2.get("ring").lower()),
+            },
+            "rotor1": {
+                "rotor": rotors[rot1.get("rot")],
+                "starting_pos": alphabet.index(rot1.get("pos").lower()),
+                "ringstellung": alphabet.index(rot1.get("ring").lower()),
+            },
+        },
+    }
+
+cx = confMaker("UKW-B-thin", {"rot":"beta", "pos":"c", "ring":"d"}, {"rot":"III", "pos":"c", "ring":"d"}, {"rot":"II", "pos":"c", "ring":"d"}, {"rot":"I", "pos":"c", "ring":"d"}, plugboard=["ah"])
 
 # define an instance of the enigma machine with the config dict and your text
-e = Enigma(conf2, "a")
-print(e.run(logging=False))
+e = Enigma(conf2, "testing")
+print(e.run(logging=True))
