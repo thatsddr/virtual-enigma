@@ -7,42 +7,56 @@ reflectors = {
 }
 # moveable wheels
 rotors = {
-    "I": "ekmflgdqvzntowyhxuspaibrcj",
-    "II": "ajdksiruxblhwtmcqgznpyfvoe",
-    "III": "bdfhjlcprtxvznyeiwgakmusqo",
-    "IV": "esovpzjayquirhxlnftgkdcmwb",
-    "V": "vzbrgityupsdnhlxawmjqofeck",
-    "VI": "jpgvoumfyqbenhzrdkasxlictw",
-    "VII": "nzjhgrcxmyswboufaivlpekqdt",
-    "VIII": "fkqhtlxocbjspdzramewniuygv",
+    "I": {"sequence": "ekmflgdqvzntowyhxuspaibrcj", "notches": ["r"]},
+    "II": {"sequence": "ajdksiruxblhwtmcqgznpyfvoe", "notches": ["f"]},
+    "III": {"sequence": "bdfhjlcprtxvznyeiwgakmusqo", "notches": ["w"]},
+    "IV": {"sequence": "esovpzjayquirhxlnftgkdcmwb", "notches": ["k"]},
+    "V": {"sequence": "vzbrgityupsdnhlxawmjqofeck", "notches": ["a"]},
+    "VI": {"sequence": "jpgvoumfyqbenhzrdkasxlictw", "notches": ["a", "n"]},
+    "VII": {"sequence": "nzjhgrcxmyswboufaivlpekqdt", "notches": ["a", "n"]},
+    "VIII": {"sequence": "fkqhtlxocbjspdzramewniuygv", "notches": ["a", "n"]},
 }
 # left-most WHEEL, does not move
 zusatzwalze = {
-    "beta": "leyjvcnixwpbqmdrtakzgfuhos",
-    "gamma": "fsokanuerhmbtiycwlqpzxvgjd",
+    "beta": {"sequence": "leyjvcnixwpbqmdrtakzgfuhos", "notches": []},
+    "gamma": {"sequence": "fsokanuerhmbtiycwlqpzxvgjd", "notches": []},
 }
 
-#config file, modify this
+# config file, modify this
 config = {
     "rotors": {
-        #rotors 1-3 + zusatzwalze configuration: specify the rotor type, starting position ang ringstellung (ring starting position)
-        "rotor1": {"rotor": rotors["VI"], "starting_pos": 9, "ringstellung": 12},
-        "rotor2": {"rotor": rotors["I"], "starting_pos": 22, "ringstellung": 0},
-        "rotor3": {"rotor": rotors["V"], "starting_pos": 14, "ringstellung": 7},
+        # rotors 1-3 + zusatzwalze configuration: specify the rotor type, starting position ang ringstellung (ring starting position)
+        "rotor1": {"rotor": rotors["VI"], "starting_pos": 0, "ringstellung": 0},
+        "rotor2": {"rotor": rotors["I"], "starting_pos": 2, "ringstellung": 0},
+        "rotor3": {"rotor": rotors["V"], "starting_pos": 0, "ringstellung": 0},
         "zusatzwalze": {
             "rotor": zusatzwalze["gamma"],
-            "starting_pos": 8,
+            "starting_pos": 0,
             "ringstellung": 0,
             "rotating": False,
         },
     },
-    #choose the type of reflector
+    # choose the type of reflector
     "reflector": reflectors["UKW-C-thin"],
-    #choose the plugboard configuration (lsit of max 10 elements)
-    "plugboard": ["fa", "hb", "er", "gv", "ip", "nz", "qt", "uj", "xm", "wl"]
-    
+    # choose the plugboard configuration (lsit of max 10 elements)
+    "plugboard": ["fa", "hb", "er", "gv", "ip", "nz", "qt", "uj", "xm", "wl"],
 }
 
-#define an instance of the enigma machine with the config dict and your text
-e = Enigma(config, "The quick brown fox jumps over the lazy dog")
-print(e.run()) #-> lzkn gulh hijm glft fauh ajff qdwg sics ach
+conf2 = {
+    "rotors": {
+        "rotor1": {"rotor": rotors["I"], "starting_pos": 0, "ringstellung": 1},
+        "rotor2": {"rotor": rotors["II"], "starting_pos": 0, "ringstellung": 0},
+        "rotor3": {"rotor": rotors["III"], "starting_pos": 0, "ringstellung": 0},
+        "zusatzwalze": {
+            "rotor": zusatzwalze["beta"],
+            "starting_pos": 0,
+            "ringstellung": 0,
+        },
+    },
+    "reflector": reflectors["UKW-B-thin"],
+}
+
+
+# define an instance of the enigma machine with the config dict and your text
+e = Enigma(conf2, "a")
+print(e.run(logging=False))
