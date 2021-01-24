@@ -72,16 +72,15 @@ def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
         },
     }
 
-
 cx = confMaker(
     "UKW-B-thin",
-    {"rot": "beta", "pos": "c", "ring": "d"},
-    {"rot": "III", "pos": "c", "ring": "d"},
-    {"rot": "II", "pos": "c", "ring": "d"},
-    {"rot": "I", "pos": "c", "ring": "d"},
-    plugboard=["ah"],
+    {"rot": "gamma", "pos": "p", "ring": "k"},
+    {"rot": "VI", "pos": "q", "ring": "u"},
+    {"rot": "II", "pos": "l", "ring": "f"},
+    {"rot": "IV", "pos": "e", "ring": "m"},
+    plugboard=["bq", "cr", "di", "ej", "kw", "mt", "os", "px", "uz", "gh"],
 )
 
 # define an instance of the enigma machine with the config dict and your text
-e = Enigma(cx, "testing")
-print(e.run(logging=True))
+e = Enigma(cx, "have fun using this")
+print(e.run(logging=False))
