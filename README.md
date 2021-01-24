@@ -19,7 +19,7 @@ After downloading the code:
                 "plugboard": [<max 10 couples of letters, as string>]
         }
 
-Alternatively, use the `confMaker` function if you want to pass letters instead of numbers in the configuration, like in the example below:
+   Alternatively, use the `confMaker` function if you want to pass letters instead of numbers in the configuration, like in the example below:
 
         configuration = confMaker(
                 <"UKW-B-thin" or "UKW-C-thin">,
