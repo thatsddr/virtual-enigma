@@ -38,3 +38,4 @@ After downloading the code:
 `
         print(myEnigma.run())
 `
+4) Run the python file and see the result of the encryption in your terminal.
