@@ -8,7 +8,7 @@ After downloading the code:
 
 1) Go in enigma/main.py and create a configuration object that with the following structure, editing the content in <angular brackets>:
 `
-    configuration = {
+configuration = {
         "rotors": {
             "rotor1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>},
             "rotor2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>},
@@ -17,7 +17,7 @@ After downloading the code:
         },
         "reflector": reflectors[<"UKW-B-thin" or "UKW-C-thin">],
         "plugboard": [<max 10 couples of letters, as string>]
-    }
+}
 `
 Alternatively, use the `confMaker` function if you want to pass letters instead of numbers in the configuration, like in the example below:
 `
@@ -34,7 +34,7 @@ Alternatively, use the `confMaker` function if you want to pass letters instead 
 `
 myEnigma = Enigma(configuration, "text here")
 `
-3) Run the simulation and print the result, e.g.;
+3) Run the simulation and print the result, e.g.:
 `
 print(myEnigma.run())
 `
