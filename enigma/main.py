@@ -42,7 +42,7 @@ config = {
     "plugboard": ["fa", "hb", "er", "gv", "ip", "nz", "qt", "uj", "xm", "wl"],
 }
 
-#allows to use letters instead of numbers as rotors and rings positions
+# allows to use letters instead of numbers as rotors and rings positions
 def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     return {
@@ -72,8 +72,16 @@ def confMaker(reflector, zus, rot3, rot2, rot1, plugboard=[]):
         },
     }
 
-#example of usage of the function above
-cx = confMaker("UKW-B-thin", {"rot":"beta", "pos":"c", "ring":"d"}, {"rot":"III", "pos":"c", "ring":"d"}, {"rot":"II", "pos":"c", "ring":"d"}, {"rot":"I", "pos":"c", "ring":"d"}, plugboard=["ah"])
+
+# example of usage of the function above
+cx = confMaker(
+    "UKW-B-thin",
+    {"rot": "beta", "pos": "c", "ring": "d"},
+    {"rot": "III", "pos": "c", "ring": "d"},
+    {"rot": "II", "pos": "c", "ring": "d"},
+    {"rot": "I", "pos": "c", "ring": "d"},
+    plugboard=["ah"],
+)
 
 # define an instance of the enigma machine with the config dict and your text
 e = Enigma(cx, "testing")
