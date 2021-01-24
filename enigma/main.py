@@ -32,8 +32,7 @@ config = {
         "zusatzwalze": {
             "rotor": zusatzwalze["gamma"],
             "starting_pos": 0,
-            "ringstellung": 0,
-            "rotating": False,
+            "ringstellung": 0
         },
     },
     # choose the type of reflector
