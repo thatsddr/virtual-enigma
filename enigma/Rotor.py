@@ -7,9 +7,9 @@ class Rotor:
         self.steps = 0
         if self.ringstellung != 0 and self.ringstellung > 0 and self.ringstellung <= 25:
             self.apply_ringstellung()
-        if self.starting_pos > 0 and self.starting_pos <= 25:
-            self.rotate(self.starting_pos)  
         self.notches = [self.rotor[self.alphabet.index(n)] for n in confObj.get("rotor").get("notches")]
+        if self.starting_pos > 0 and self.starting_pos <= 25:
+            self.rotate(self.starting_pos)   
     
     def apply_ringstellung(self):
         self.rotor = self.rotor[-self.ringstellung:] + self.rotor[:-self.ringstellung]
