@@ -21,33 +21,33 @@ class Settings:
             "beta": {"sequence": "leyjvcnixwpbqmdrtakzgfuhos", "notches": []},
             "gamma": {"sequence": "fsokanuerhmbtiycwlqpzxvgjd", "notches": []},
         }
+        self.alphabet = "abcdefghijklmnopqrstuvwxyz"
         self.config = None
     
     def configure(self, configObj):
-        alphabet = "abcdefghijklmnopqrstuvwxyz"
         self.config = {
         "reflector": configObj["reflector"],
         "plugboard": configObj["plugboard"],
         "rotors": {
             "zusatzwalze": {
                 "rotor": configObj["zus"].get("rot"),
-                "starting_pos": alphabet.index(configObj["zus"].get("pos").lower()),
-                "ringstellung": alphabet.index(configObj["zus"].get("ring").lower()),
+                "starting_pos": self.alphabet.index(configObj["zus"].get("pos").lower()),
+                "ringstellung": self.alphabet.index(configObj["zus"].get("ring").lower()),
             },
             "rotor3": {
                 "rotor": configObj["rot3"].get("rot"),
-                "starting_pos": alphabet.index(configObj["rot3"].get("pos").lower()),
-                "ringstellung": alphabet.index(configObj["rot3"].get("ring").lower()),
+                "starting_pos": self.alphabet.index(configObj["rot3"].get("pos").lower()),
+                "ringstellung": self.alphabet.index(configObj["rot3"].get("ring").lower()),
             },
             "rotor2": {
                 "rotor": configObj["rot2"].get("rot"),
-                "starting_pos": alphabet.index(configObj["rot2"].get("pos").lower()),
-                "ringstellung": alphabet.index(configObj["rot2"].get("ring").lower()),
+                "starting_pos": self.alphabet.index(configObj["rot2"].get("pos").lower()),
+                "ringstellung": self.alphabet.index(configObj["rot2"].get("ring").lower()),
             },
             "rotor1": {
                 "rotor": configObj["rot1"].get("rot"),
-                "starting_pos": alphabet.index(configObj["rot1"].get("pos").lower()),
-                "ringstellung": alphabet.index(configObj["rot1"].get("ring").lower()),
+                "starting_pos": self.alphabet.index(configObj["rot1"].get("pos").lower()),
+                "ringstellung": self.alphabet.index(configObj["rot1"].get("ring").lower()),
             },
         },
     }
