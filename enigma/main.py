@@ -1,7 +1,7 @@
 from Enigma import Enigma
 
 if __name__ == "__main__":
-    # define an instance of the enigma machine with the config dict and your text
+    # define an instance of the enigma machine with the config dictionary
     e = Enigma(
         {
             "reflector": "UKW-B-thin",
@@ -12,4 +12,6 @@ if __name__ == "__main__":
             "plugboard": ["bq", "cr", "di", "ej", "kw", "mt", "os", "px", "uz", "gh"],
         }
     )
+    
+    #print some encrypted text
     print(e.run("have fun using this"))
