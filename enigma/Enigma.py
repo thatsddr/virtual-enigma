@@ -8,7 +8,7 @@ class Enigma:
     def __init__(self, configObj):
         self.settings = Settings()
         self.settings.configure(configObj)
-        
+
         self.rotor1 = Rotor(self.settings.get_rotor("rotor1"))
         self.rotor2 = Rotor(self.settings.get_rotor("rotor2"))
         self.rotor3 = Rotor(self.settings.get_rotor("rotor3"))
@@ -41,11 +41,12 @@ class Enigma:
         self.plugboard = Plugboard(self.plugboardConfig, text.strip().replace(" ", "").lower())
         self.text = self.plugboard.apply()
         temp = []
-        for i in range(1, len(self.text) + 1):
-            self.rotateRotors()
-            temp.append(self.encryptLetter(self.text[i - 1]))
-            if i % 4 == 0:
-                temp.append(" ")
+        for i in range(0, len(self.text)):
+            if self.text[i] in self.settings.alphabet:
+                self.rotateRotors()
+                temp.append(self.encryptLetter(self.text[i]))
+                if len(temp) % 4 == 0:
+                    temp.append(" ")
         tempstr = "".join(temp)
         self.plugboard2 = Plugboard(self.plugboardConfig, tempstr)
         return self.plugboard2.apply()
