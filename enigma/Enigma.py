@@ -1,18 +1,21 @@
 from Plugboard import Plugboard
 from Reflector import Reflector
 from Rotor import Rotor
+from Settings import Settings
 
 
 class Enigma:
-    def __init__(self, configObj, text):
-        self.rotor1 = Rotor(configObj["rotors"]["rotor1"])
-        self.rotor2 = Rotor(configObj["rotors"]["rotor2"])
-        self.rotor3 = Rotor(configObj["rotors"]["rotor3"])
-        self.zusatzwalze = Rotor(configObj["rotors"]["zusatzwalze"])
-        self.reflector = Reflector(configObj["reflector"])
-        self.text = text.strip().replace(" ", "").lower()
-        self.plugboardConfig = configObj.get("plugboard", [])
-        self.plugboard = Plugboard(self.plugboardConfig, self.text)
+    def __init__(self, configObj):
+        self.settings = Settings()
+        self.settings.configure(configObj)
+        
+        self.rotor1 = Rotor(self.settings.get_rotor("rotor1"))
+        self.rotor2 = Rotor(self.settings.get_rotor("rotor2"))
+        self.rotor3 = Rotor(self.settings.get_rotor("rotor3"))
+        self.zusatzwalze = Rotor(self.settings.get_rotor("zusatzwalze"))
+
+        self.reflector = Reflector(self.settings.get_reflector())
+        self.plugboardConfig = self.settings.plugboard()
 
     def rotateRotors(self):
         self.rotor1.rotate()
@@ -34,7 +37,8 @@ class Enigma:
         return v9
 
 
-    def run(self):
+    def run(self, text):
+        self.plugboard = Plugboard(self.plugboardConfig, text.strip().replace(" ", "").lower())
         self.text = self.plugboard.apply()
         temp = []
         for i in range(1, len(self.text) + 1):
