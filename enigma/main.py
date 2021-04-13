@@ -83,4 +83,4 @@ cx = confMaker(
 if __name__ == "__main__":
     # define an instance of the enigma machine with the config dict and your text
     e = Enigma(cx, "have fun using this")
-    print(e.run(logging=False))
+    print(e.run())
