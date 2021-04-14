@@ -5,10 +5,10 @@ if __name__ == "__main__":
     e = Enigma(
         {
             "reflector": "UKW-B-thin",
-            "zus": {"rot": "gamma", "pos": "p", "ring": "k"},
-            "rot3": {"rot": "VI", "pos": "q", "ring": "u"},
-            "rot2": {"rot": "II", "pos": "l", "ring": "f"},
-            "rot1": {"rot": "IV", "pos": "e", "ring": "m"},
+            "zus": {"rot": "gamma", "pos": "p", "ring": 11},
+            "rot3": {"rot": "VI", "pos": "q", "ring": 21},
+            "rot2": {"rot": "II", "pos": "l", "ring": 6},
+            "rot1": {"rot": "IV", "pos": "e", "ring": 13},
             "plugboard": ["bq", "cr", "di", "ej", "kw", "mt", "os", "px", "uz", "gh"],
         }
     )
