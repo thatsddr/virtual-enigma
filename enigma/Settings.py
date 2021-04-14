@@ -26,12 +26,13 @@ class Settings:
     
     def to_position(self, param):
         if type(param) is str and param in self.alphabet:
+            # Returns the position in the alphabet of a letter
             return  self.alphabet.index(param.lower())
         elif type(param) is int and param > 0 and param < 27:
+            # This is already a number, return it - 1
             return param - 1
         else:
             raise Exception("Invalid param. '" + str(param) + "' is not a valid argument")
-
     
     def configure(self, configObj):
         self.config = {
@@ -62,6 +63,7 @@ class Settings:
     }
 
     def get_rotor(self, rotorName):
+        # return the rotor configuration after taking its name as input
         if self.config != None:
             if (rotorName in ["rotor1", "rotor2", "rotor3"]):
                 return {
