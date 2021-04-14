@@ -16,6 +16,7 @@ class Enigma:
 
         self.reflector = Reflector(self.settings.get_reflector())
         self.plugboardConfig = self.settings.plugboard()
+        self.plugboard = Plugboard(self.plugboardConfig)
 
     def rotateRotors(self):
         self.rotor1.rotate()
@@ -38,7 +39,6 @@ class Enigma:
 
 
     def run(self, text):
-        self.plugboard = Plugboard(self.plugboardConfig)
         self.text = self.plugboard.apply(text.strip().replace(" ", "").lower())
         temp = []
         temp_length = 0
