@@ -1,7 +1,7 @@
 class Plugboard:
     def __init__(self, couples):
         self.list = couples
-        if len(self.list) - 1 < 10:
+        if len(self.list) < 11:
             self.dict = {}
             self.dictify()
         else:
