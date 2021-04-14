@@ -10,32 +10,21 @@ After downloading the code:
 
         configuration = {
                 "rotors": {
-                    "rotor1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>},
-                    "rotor2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>},
-                    "rotor3": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>},
-                    "zusatzwalze": {"rotor": zusatzwalze[<"gamma" or "beta">], "starting_pos": <range 0-25, integer>, "ringstellung": <range 0-25, integer>}
+                    "rot1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25 (int), or a-z (sting)>, "ringstellung": <range 0-25 (int), or a-z (sting)>},
+                    "rot2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25 (int), or a-z (sting)>, "ringstellung": <range 0-25 (int), or a-z (sting)>},
+                    "rot3": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 0-25 (int), or a-z (sting)>, "ringstellung": <range 0-25 (int), or a-z (sting)>},
+                    "zus": {"rotor": zusatzwalze[<"gamma" or "beta">], "starting_pos": <range 0-25 (int), or a-z (sting)>, "ringstellung": <range 0-25 (int), or a-z (sting)>}
                 },
                 "reflector": reflectors[<"UKW-B-thin" or "UKW-C-thin">],
                 "plugboard": [<max 10 couples of letters, as string>]
         }
 
-   Alternatively, use the `confMaker` function if you want to pass letters instead of numbers in the configuration, like in the example below:
-
-        configuration = confMaker(
-                <"UKW-B-thin" or "UKW-C-thin">,
-                {"rot": <"beta" or "gamma">, "pos": <range a-z, as string>, "ring": <range a-z, as string>},
-                {"rot": <range I - VIII, string>, "pos": <range a-z, as string>, "ring": <range a-z, as string>},
-                {"rot": <range I - VIII, string>, "pos": <range a-z, as string>, "ring": <range a-z, as string>},
-                {"rot": <range I - VIII, string>, "pos": <range a-z, as string>, "ring": <range a-z, as string>},
-                plugboard=[<max 10 couples of letters, as string>]
-        ) 
-
 2) Create an instance of enigma and pass the configuration object as the first parameter and the text you want to encode as the second parameter, e.g.:
 `
-        myEnigma = Enigma(configuration, "text here")
+        myEnigma = Enigma(configuration)
 `
 3) Run the simulation and print the result, e.g.:
 `
-        print(myEnigma.run())
+        print(myEnigma.run("your text here"))
 `
 4) Run the python file and see the result of the encryption in your terminal.
