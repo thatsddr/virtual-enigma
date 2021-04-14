@@ -38,15 +38,17 @@ class Enigma:
 
 
     def run(self, text):
-        self.plugboard = Plugboard(self.plugboardConfig, text.strip().replace(" ", "").lower())
-        self.text = self.plugboard.apply()
+        self.plugboard = Plugboard(self.plugboardConfig)
+        self.text = self.plugboard.apply(text.strip().replace(" ", "").lower())
         temp = []
+        temp_length = 0
         for i in range(0, len(self.text)):
             if self.text[i] in self.settings.alphabet:
+                temp_length += 1
                 self.rotateRotors()
                 temp.append(self.encryptLetter(self.text[i]))
-                if len(temp) % 4 == 0:
+                if temp_length % 4 == 0:
+                    temp_length = 0
                     temp.append(" ")
         tempstr = "".join(temp)
-        self.plugboard2 = Plugboard(self.plugboardConfig, tempstr)
-        return self.plugboard2.apply()
+        return self.plugboard.apply(tempstr)
