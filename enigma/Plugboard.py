@@ -1,10 +1,9 @@
 class Plugboard:
-    def __init__(self, couples, text):
+    def __init__(self, couples):
         self.list = couples
         if len(self.list) - 1 < 10:
             self.dict = {}
             self.dictify()
-            self.text = text
         else:
             raise Exception("too many couples of letters ("+str(len(self.list))+")")
         
@@ -17,12 +16,12 @@ class Plugboard:
                 self.dict = {}
                 raise Exception("Duplicated letter", c[0])
     
-    def apply(self):
+    def apply(self, text):
         new_text = []
-        for c in self.text:
+        for c in text:
             if self.dict.get(c):
                 new_text.append(self.dict[c])
             else:
                 new_text.append(c)
-        self.text = "".join(new_text)
-        return self.text
+        return "".join(new_text)
+        
