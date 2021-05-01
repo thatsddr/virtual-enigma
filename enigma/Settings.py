@@ -25,6 +25,7 @@ class Settings:
         self.config = None
     
     def to_position(self, param):
+        # convert a configuration parameter (letter or number) to the position it has in the alphabet
         if type(param) is str and param in self.alphabet:
             # Returns the position in the alphabet of a letter
             return  self.alphabet.index(param.lower())
@@ -35,6 +36,7 @@ class Settings:
             raise Exception("Invalid param. '" + str(param) + "' is not a valid argument")
     
     def configure(self, configObj):
+        # create the actual configuration object
         self.config = {
         "reflector": configObj["reflector"],
         "plugboard": configObj["plugboard"],
