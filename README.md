@@ -1,12 +1,21 @@
 # virtual-enigma
+
+![GitHub top language](https://img.shields.io/github/languages/top/thatsddr/virtual-enigma)
+![GitHub repo size](https://img.shields.io/github/repo-size/thatsddr/virtual-enigma)
+![GitHub](https://img.shields.io/github/license/thatsddr/virtual-enigma)
+
 Python3 replica of the enigma M4 "Shark" machine.
 
-> No bugs are currently known and it should work fine with other simulations.
+## Project Status
 
-# usage
+This project is completed. The outputs of this enigma simulator match those of other online simulators.
+
+## Usage
+Prerequisites: ```python 3```.
+
 After downloading the code:
 
-1) Go in enigma/main.py and create a configuration object that with the following structure, editing the content in <angular brackets>:
+1) Go in ```enigma/main.py``` and create a configuration object with the following structure, editing the values in < angular brackets >:
 
         configuration = {
                 "rotors": {
@@ -27,4 +36,4 @@ After downloading the code:
 `
         print(myEnigma.run("your text here"))
 `
-4) Run the python file and see the result of the encryption in your terminal.
+4) Run the python file (by running ```python3 main.py```) and you will see the output of the encryption in your terminal.
