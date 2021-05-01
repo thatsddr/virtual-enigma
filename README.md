@@ -31,9 +31,9 @@ After downloading the code:
 2) Create an instance of enigma and pass the configuration object as the first parameter and the text you want to encode as the second parameter, e.g.:
 `
         myEnigma = Enigma(configuration)
-`
+`;
 3) Run the simulation and print the result, e.g.:
 `
         print(myEnigma.run("your text here"))
-`
+`;
 4) Run the python file (by running ```python3 main.py```) and you will see the output of the encryption in your terminal.
