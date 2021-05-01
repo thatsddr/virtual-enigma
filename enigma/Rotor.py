@@ -31,8 +31,8 @@ class Rotor:
         self.updateSteps(step)
         return self.rotor
     
-    #encrypts the letter that goes from the input towards the reflectos
     def left_mov(self, letter, prev=None):
+         #encrypts the letter that goes from the input towards the reflectos
         index = self.alphabet.index(letter)
         if prev == None:
             return self.rotor[index]
@@ -42,9 +42,9 @@ class Rotor:
             # 3. Make sure it is < 26
             # 4. Get the letter in teh rotor at that position
             return self.rotor[(26 - (prev - index)) % 26]
-        
-    #encrypts the letter that goes from the reflector towards the output
+         
     def right_mov(self, letter):
+        #encrypts the letter that goes from the reflector towards the output
         # 1. Get the position of the letter in the alphabet and add the steps of the rotor. Make sure that it is < 26.
         # 2. Get the letter with the obtained position in the alphabet.
         # 3. Get the index of that letter in the rotor.
