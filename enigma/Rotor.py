@@ -6,7 +6,7 @@ class Rotor:
         self.starting_pos = confObj.get("starting_pos", 0)
         self.steps = 0
 
-        if self.ringstellung != 0 and self.ringstellung > 0 and self.ringstellung <= 25:
+        if self.ringstellung > 0 and self.ringstellung <= 25:
             self.apply_ringstellung()
 
         # get the position of the notches after the ringstellung
@@ -32,7 +32,7 @@ class Rotor:
         return self.rotor
     
     def left_mov(self, letter, prev=None):
-         #encrypts the letter that goes from the input towards the reflectos
+         #encrypts the letter that goes from the input towards the reflectors
         index = self.alphabet.index(letter)
         if prev == None:
             return self.rotor[index]
