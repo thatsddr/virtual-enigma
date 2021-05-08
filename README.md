@@ -37,3 +37,13 @@ After downloading the code:
         print(myEnigma.run("your text here"))
 `;
 4) Run the python file (by running ```python3 main.py```) and you will see the output of the encryption in your terminal.
+
+## Tools and Sources
+
+The entire project was realized using python3 only, without the use of any additional framework or library.
+
+Sources used to learn about Enigma:
+* [Hackaday | The Enigma Enigma: How The Enigma Machine Worked](https://hackaday.com/2017/08/22/the-enigma-enigma-how-the-enigma-machine-worked/);
+* [CryptoMuseum | Enigma M4](https://www.cryptomuseum.com/crypto/enigma/m4/index.htm).
+
+Simulator used to test the output: [cryptii.com](https://cryptii.com).
