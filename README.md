@@ -19,10 +19,10 @@ After downloading the code:
 
         configuration = {
                 "rotors": {
-                    "rot1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "rot2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "rot3": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "zus": {"rotor": zusatzwalze[<"gamma" or "beta">], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>}
+                    "rot1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (string)>, "ringstellung": <range 1-26 (int), or a-z (string)>},
+                    "rot2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (string)>, "ringstellung": <range 1-26 (int), or a-z (string)>},
+                    "rot3": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (string)>, "ringstellung": <range 1-26 (int), or a-z (string)>},
+                    "zus": {"rotor": zusatzwalze[<"gamma" or "beta">], "starting_pos": <range 1-26 (int), or a-z (string)>, "ringstellung": <range 1-26 (int), or a-z (string)>}
                 },
                 "reflector": reflectors[<"UKW-B-thin" or "UKW-C-thin">],
                 "plugboard": [<max 10 couples of letters, as string>]
