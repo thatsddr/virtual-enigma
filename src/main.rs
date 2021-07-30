@@ -39,8 +39,8 @@ fn main() {
         ]
         .to_vec(),
     };
-    let s = Settings::new();
-    if let Some(i) = s.rotors.get("I") {
-        print!("{:?}", i.sequence)
-    }
+
+    let mut s = Settings::new();
+    s.configure(&c);
+    print!("{:#?}", s.config)
 }
