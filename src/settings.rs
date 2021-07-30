@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+#[derive(Clone)]
 pub struct RotorData {
     pub sequence: String,
     pub notches: Vec<String>,
@@ -11,13 +12,22 @@ pub struct RotorSettings {
     pub ring: i16,
 }
 
-pub struct RotorsConfiguration {
-    pub zusatzwalze: RotorSettings,
-    pub rotor3: RotorSettings,
-    pub rotor2: RotorSettings,
-    pub rotor1: RotorSettings,
+#[derive(Clone, Debug)]
+pub struct RotorActionableSettings {
+    pub rot: String,
+    pub pos: i16,
+    pub ring: i16,
 }
 
+#[derive(Clone, Debug)]
+pub struct RotorsConfiguration {
+    pub zusatzwalze: RotorActionableSettings,
+    pub rotor3: RotorActionableSettings,
+    pub rotor2: RotorActionableSettings,
+    pub rotor1: RotorActionableSettings,
+}
+
+#[derive(Clone, Debug)]
 pub struct Configuration {
     pub reflector: String,
     pub plugboard: Vec<String>,
@@ -33,6 +43,7 @@ pub struct ConfStruct {
     pub plugboard: Vec<String>,
 }
 
+#[derive(Clone)]
 pub struct Settings {
     pub rotors: HashMap<String, RotorData>,
     pub reflectors: HashMap<String, String>,
@@ -118,5 +129,76 @@ impl Settings {
             alphabet,
             config,
         }
+    }
+
+    pub fn letter_to_position(&self, letter: &String) -> i16 {
+        if let Some(i) = self.alphabet.find(letter) {
+            return i as i16;
+        };
+        panic!("Character {:?} not in alphabet", letter)
+    }
+
+    pub fn number_to_position(&self, num: i16) -> i16 {
+        if num > 0 && num < 26 {
+            return num - 1;
+        }
+        panic!("Number {:?} either too big or too small", num)
+    }
+
+    pub fn configure(&mut self, conf: &ConfStruct) -> () {
+        let config = Configuration {
+            plugboard: conf.plugboard.clone(),
+            reflector: conf.reflector.clone(),
+            rotors: RotorsConfiguration {
+                zusatzwalze: RotorActionableSettings {
+                    rot: conf.zus.rot.clone(),
+                    pos: self.letter_to_position(&conf.zus.pos),
+                    ring: self.number_to_position(conf.zus.ring),
+                },
+                rotor3: RotorActionableSettings {
+                    rot: conf.rot3.rot.clone(),
+                    pos: self.letter_to_position(&conf.rot3.pos),
+                    ring: self.number_to_position(conf.rot3.ring),
+                },
+                rotor2: RotorActionableSettings {
+                    rot: conf.rot2.rot.clone(),
+                    pos: self.letter_to_position(&conf.rot2.pos),
+                    ring: self.number_to_position(conf.rot2.ring),
+                },
+                rotor1: RotorActionableSettings {
+                    rot: conf.rot1.rot.clone(),
+                    pos: self.letter_to_position(&conf.rot1.pos),
+                    ring: self.number_to_position(conf.rot1.ring),
+                },
+            },
+        };
+        self.config = Some(config.clone());
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn letter_to_position_works() {
+        let s = Settings::new();
+        let p = s.letter_to_position(&"d".to_owned());
+        assert_eq!(p, 3);
+    }
+
+    #[test]
+    fn number_to_position_works() {
+        let s = Settings::new();
+        let p = s.number_to_position(14);
+        assert_eq!(p, 13)
+    }
+
+    #[test]
+    #[should_panic]
+    fn number_to_position_panics() {
+        let s = Settings::new();
+        let p = s.number_to_position(44);
+        assert_eq!(p, 13)
     }
 }
