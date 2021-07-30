@@ -1,39 +1,48 @@
 use std::collections::HashMap;
 
-struct RotorData {
-    sequence: String,
-    notches: Vec<String>,
+pub struct RotorData {
+    pub sequence: String,
+    pub notches: Vec<String>,
 }
 
-struct RotorSettings {
-    rot: String,
-    pos: String,
-    ring: i16,
+pub struct RotorSettings {
+    pub rot: String,
+    pub pos: String,
+    pub ring: i16,
 }
 
-struct RotorsConfiguration {
-    zusatzwalze: RotorSettings,
-    rotor3: RotorSettings,
-    rotor2: RotorSettings,
-    rotor1: RotorSettings,
+pub struct RotorsConfiguration {
+    pub zusatzwalze: RotorSettings,
+    pub rotor3: RotorSettings,
+    pub rotor2: RotorSettings,
+    pub rotor1: RotorSettings,
 }
 
-struct Configuration {
-    reflector: String,
-    plugboard: Vec<String>,
-    rotors: RotorsConfiguration,
+pub struct Configuration {
+    pub reflector: String,
+    pub plugboard: Vec<String>,
+    pub rotors: RotorsConfiguration,
 }
 
-struct Settings {
-    rotors: HashMap<String, RotorData>,
-    reflectors: HashMap<String, String>,
-    zusatzwalze: HashMap<String, RotorData>,
-    alphabet: String,
-    config: Option<Configuration>,
+pub struct ConfStruct {
+    pub reflector: String,
+    pub zus: RotorSettings,
+    pub rot3: RotorSettings,
+    pub rot2: RotorSettings,
+    pub rot1: RotorSettings,
+    pub plugboard: Vec<String>,
+}
+
+pub struct Settings {
+    pub rotors: HashMap<String, RotorData>,
+    pub reflectors: HashMap<String, String>,
+    pub zusatzwalze: HashMap<String, RotorData>,
+    pub alphabet: String,
+    pub config: Option<Configuration>,
 }
 
 impl Settings {
-    fn new() -> Self {
+    pub fn new() -> Self {
         let rotor1 = RotorData {
             sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
             notches: vec!["r".to_owned()],
