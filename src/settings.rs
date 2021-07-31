@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-#[derive(Clone)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct RotorData {
     pub sequence: String,
     pub notches: Vec<String>,
@@ -31,7 +31,7 @@ pub struct RotorsConfiguration {
 pub struct Configuration {
     pub reflector: String,
     pub plugboard: Vec<String>,
-    pub rotors: RotorsConfiguration,
+    pub rotors: HashMap<String, RotorActionableSettings>,
 }
 
 pub struct ConfStruct {
@@ -41,6 +41,13 @@ pub struct ConfStruct {
     pub rot2: RotorSettings,
     pub rot1: RotorSettings,
     pub plugboard: Vec<String>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct RotorExport {
+    pub rotor: RotorData,
+    pub starting_position: i16,
+    pub ringstellung: i16,
 }
 
 #[derive(Clone)]
@@ -146,33 +153,86 @@ impl Settings {
     }
 
     pub fn configure(&mut self, conf: &ConfStruct) -> () {
+        let mut rotors_map = HashMap::new();
+        rotors_map.insert(
+            "zusatzwalze".to_owned(),
+            RotorActionableSettings {
+                rot: conf.zus.rot.clone(),
+                pos: self.letter_to_position(&conf.zus.pos),
+                ring: self.number_to_position(conf.zus.ring),
+            },
+        );
+        rotors_map.insert(
+            "rotor3".to_owned(),
+            RotorActionableSettings {
+                rot: conf.rot3.rot.clone(),
+                pos: self.letter_to_position(&conf.rot3.pos),
+                ring: self.number_to_position(conf.rot3.ring),
+            },
+        );
+        rotors_map.insert(
+            "rotor2".to_owned(),
+            RotorActionableSettings {
+                rot: conf.rot2.rot.clone(),
+                pos: self.letter_to_position(&conf.rot2.pos),
+                ring: self.number_to_position(conf.rot2.ring),
+            },
+        );
+        rotors_map.insert(
+            "rotor1".to_owned(),
+            RotorActionableSettings {
+                rot: conf.rot1.rot.clone(),
+                pos: self.letter_to_position(&conf.rot1.pos),
+                ring: self.number_to_position(conf.rot1.ring),
+            },
+        );
+
         let config = Configuration {
             plugboard: conf.plugboard.clone(),
             reflector: conf.reflector.clone(),
-            rotors: RotorsConfiguration {
-                zusatzwalze: RotorActionableSettings {
-                    rot: conf.zus.rot.clone(),
-                    pos: self.letter_to_position(&conf.zus.pos),
-                    ring: self.number_to_position(conf.zus.ring),
-                },
-                rotor3: RotorActionableSettings {
-                    rot: conf.rot3.rot.clone(),
-                    pos: self.letter_to_position(&conf.rot3.pos),
-                    ring: self.number_to_position(conf.rot3.ring),
-                },
-                rotor2: RotorActionableSettings {
-                    rot: conf.rot2.rot.clone(),
-                    pos: self.letter_to_position(&conf.rot2.pos),
-                    ring: self.number_to_position(conf.rot2.ring),
-                },
-                rotor1: RotorActionableSettings {
-                    rot: conf.rot1.rot.clone(),
-                    pos: self.letter_to_position(&conf.rot1.pos),
-                    ring: self.number_to_position(conf.rot1.ring),
-                },
-            },
+            rotors: rotors_map,
         };
         self.config = Some(config.clone());
+    }
+
+    pub fn get_rotor(&self, rotor_name: &String) -> Option<RotorExport> {
+        if rotor_name == &"rotor1".to_owned()
+            || rotor_name == &"rotor2".to_owned()
+            || rotor_name == &"rotor3".to_owned()
+        {
+            //if a configuration exists
+            if let Some(conf) = &self.config {
+                //if the name of the rotors (1-3) is in the rotors hashmap
+                if let Some(rot) = conf.rotors.get(rotor_name) {
+                    // if the corrisponding rotor (I-VIII) is in the config
+                    if let Some(data) = self.rotors.get(&rot.rot) {
+                        //return
+                        return Some(RotorExport {
+                            rotor: data.clone(),
+                            ringstellung: rot.ring,
+                            starting_position: rot.pos,
+                        });
+                    }
+                }
+            }
+        } else if rotor_name == "zusatzwalze" {
+            //if a configuration exists
+            if let Some(conf) = &self.config {
+                //if the name of the rotors (1-3) is in the rotors hashmap
+                if let Some(rot) = conf.rotors.get(rotor_name) {
+                    // if the corrisponding rotor (I-VIII) is in the config
+                    if let Some(data) = self.zusatzwalze.get(&rot.rot) {
+                        //return
+                        return Some(RotorExport {
+                            rotor: data.clone(),
+                            ringstellung: rot.ring,
+                            starting_position: rot.pos,
+                        });
+                    }
+                }
+            }
+        }
+        None
     }
 }
 
@@ -200,5 +260,72 @@ mod tests {
         let s = Settings::new();
         let p = s.number_to_position(44);
         assert_eq!(p, 13)
+    }
+
+    #[test]
+    fn should_return_rotor_export() {
+        let mut s = Settings::new();
+        let c = ConfStruct {
+            reflector: "UKW-B-thin".to_owned(),
+            zus: RotorSettings {
+                rot: "gamma".to_owned(),
+                pos: "p".to_owned(),
+                ring: 11,
+            },
+            rot3: RotorSettings {
+                rot: "VI".to_owned(),
+                pos: "q".to_owned(),
+                ring: 21,
+            },
+            rot2: RotorSettings {
+                rot: "II".to_owned(),
+                pos: "l".to_owned(),
+                ring: 6,
+            },
+            rot1: RotorSettings {
+                rot: "IV".to_owned(),
+                pos: "e".to_owned(),
+                ring: 13,
+            },
+            plugboard: [
+                "bq".to_owned(),
+                "cr".to_owned(),
+                "di".to_owned(),
+                "ej".to_owned(),
+                "kw".to_owned(),
+                "mt".to_owned(),
+                "os".to_owned(),
+                "px".to_owned(),
+                "uz".to_owned(),
+                "gh".to_owned(),
+            ]
+            .to_vec(),
+        };
+        s.configure(&c);
+        let r = s.get_rotor(&"rotor1".to_owned()).clone();
+        print!("{:?}", r);
+        assert_eq!(
+            r,
+            Some(RotorExport {
+                rotor: RotorData {
+                    sequence: "esovpzjayquirhxlnftgkdcmwb".to_owned(),
+                    notches: vec!["k".to_owned()]
+                },
+                starting_position: 4,
+                ringstellung: 12
+            })
+        );
+        let r = s.get_rotor(&"zusatzwalze".to_owned()).clone();
+        assert_eq!(
+            r,
+            Some(RotorExport {
+                rotor: RotorData {
+                    sequence: "fsokanuerhmbtiycwlqpzxvgjd".to_owned(),
+                    notches: vec![]
+                },
+                starting_position: 15,
+                ringstellung: 10
+            })
+        )
     }
 }
