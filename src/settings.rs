@@ -234,6 +234,15 @@ impl Settings {
         }
         None
     }
+
+    pub fn get_reflector(&self) -> Option<String> {
+        if let Some(conf) = &self.config {
+            if let Some(refl) = &self.reflectors.get(&conf.reflector) {
+                return Some(refl.to_string());
+            }
+        };
+        return None;
+    }
 }
 
 #[cfg(test)]
@@ -327,5 +336,49 @@ mod tests {
                 ringstellung: 10
             })
         )
+    }
+
+    #[test]
+    pub fn should_return_reflector() {
+        let mut s = Settings::new();
+        let c = ConfStruct {
+            reflector: "UKW-B-thin".to_owned(),
+            zus: RotorSettings {
+                rot: "gamma".to_owned(),
+                pos: "p".to_owned(),
+                ring: 11,
+            },
+            rot3: RotorSettings {
+                rot: "VI".to_owned(),
+                pos: "q".to_owned(),
+                ring: 21,
+            },
+            rot2: RotorSettings {
+                rot: "II".to_owned(),
+                pos: "l".to_owned(),
+                ring: 6,
+            },
+            rot1: RotorSettings {
+                rot: "IV".to_owned(),
+                pos: "e".to_owned(),
+                ring: 13,
+            },
+            plugboard: [
+                "bq".to_owned(),
+                "cr".to_owned(),
+                "di".to_owned(),
+                "ej".to_owned(),
+                "kw".to_owned(),
+                "mt".to_owned(),
+                "os".to_owned(),
+                "px".to_owned(),
+                "uz".to_owned(),
+                "gh".to_owned(),
+            ]
+            .to_vec(),
+        };
+        s.configure(&c);
+        let r = s.get_reflector();
+        assert_eq!(r.unwrap(), "enkqauywjicopblmdxzvfthrgs".to_string())
     }
 }
