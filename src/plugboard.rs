@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub struct Plugboard {
-    dict: HashMap<char, char>,
+    pub dict: HashMap<char, char>,
 }
 
 impl Plugboard {
@@ -20,7 +20,7 @@ impl Plugboard {
         panic!("Too many couples in the plugboard")
     }
 
-    pub fn dictify(list: Vec<String>) -> HashMap<char, char> {
+    fn dictify(list: Vec<String>) -> HashMap<char, char> {
         let mut dict: HashMap<char, char> = HashMap::new();
         for c in list.clone() {
             let chars: Vec<char> = c.chars().collect();
