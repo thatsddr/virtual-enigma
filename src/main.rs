@@ -1,3 +1,4 @@
+mod plugboard;
 mod settings;
 
 use crate::settings::{ConfStruct, RotorInput, Settings};
