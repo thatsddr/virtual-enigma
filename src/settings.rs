@@ -146,13 +146,6 @@ impl Settings {
         }
     }
 
-    pub fn letter_to_position(&self, letter: &String) -> i16 {
-        if let Some(i) = self.alphabet.find(letter) {
-            return i as i16;
-        };
-        panic!("Character {:?} not in alphabet", letter)
-    }
-
     pub fn char_to_position(&self, letter: &char) -> i16 {
         if let Some(i) = self.alphabet.find(*letter) {
             return i as i16;
@@ -311,13 +304,6 @@ mod tests {
         };
         s.configure(&c);
         return s;
-    }
-
-    #[test]
-    fn letter_to_position_works() {
-        let s = Settings::new();
-        let p = s.letter_to_position(&"d".to_owned());
-        assert_eq!(p, 3);
     }
 
     #[test]
