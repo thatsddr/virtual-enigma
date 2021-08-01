@@ -243,36 +243,20 @@ impl Settings {
         };
         return None;
     }
+
+    pub fn get_plugboard(&self) -> Option<Vec<String>> {
+        if let Some(conf) = &self.config {
+            return Some(conf.plugboard.clone());
+        };
+        None
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[test]
-    fn letter_to_position_works() {
-        let s = Settings::new();
-        let p = s.letter_to_position(&"d".to_owned());
-        assert_eq!(p, 3);
-    }
-
-    #[test]
-    fn number_to_position_works() {
-        let s = Settings::new();
-        let p = s.number_to_position(14);
-        assert_eq!(p, 13)
-    }
-
-    #[test]
-    #[should_panic]
-    fn number_to_position_panics() {
-        let s = Settings::new();
-        let p = s.number_to_position(44);
-        assert_eq!(p, 13)
-    }
-
-    #[test]
-    fn should_return_rotor_export() {
+    fn init_settings() -> Settings {
         let mut s = Settings::new();
         let c = ConfStruct {
             reflector: "UKW-B-thin".to_owned(),
@@ -311,6 +295,34 @@ mod tests {
             .to_vec(),
         };
         s.configure(&c);
+        return s;
+    }
+
+    #[test]
+    fn letter_to_position_works() {
+        let s = Settings::new();
+        let p = s.letter_to_position(&"d".to_owned());
+        assert_eq!(p, 3);
+    }
+
+    #[test]
+    fn number_to_position_works() {
+        let s = Settings::new();
+        let p = s.number_to_position(14);
+        assert_eq!(p, 13)
+    }
+
+    #[test]
+    #[should_panic]
+    fn number_to_position_panics() {
+        let s = Settings::new();
+        let p = s.number_to_position(44);
+        assert_eq!(p, 13)
+    }
+
+    #[test]
+    fn should_return_rotor_export() {
+        let s = init_settings();
         let r = s.get_rotor(&"rotor1".to_owned()).clone();
         print!("{:?}", r);
         assert_eq!(
@@ -340,30 +352,18 @@ mod tests {
 
     #[test]
     pub fn should_return_reflector() {
-        let mut s = Settings::new();
-        let c = ConfStruct {
-            reflector: "UKW-B-thin".to_owned(),
-            zus: RotorSettings {
-                rot: "gamma".to_owned(),
-                pos: "p".to_owned(),
-                ring: 11,
-            },
-            rot3: RotorSettings {
-                rot: "VI".to_owned(),
-                pos: "q".to_owned(),
-                ring: 21,
-            },
-            rot2: RotorSettings {
-                rot: "II".to_owned(),
-                pos: "l".to_owned(),
-                ring: 6,
-            },
-            rot1: RotorSettings {
-                rot: "IV".to_owned(),
-                pos: "e".to_owned(),
-                ring: 13,
-            },
-            plugboard: [
+        let s = init_settings();
+        let r = s.get_reflector();
+        assert_eq!(r.unwrap(), "enkqauywjicopblmdxzvfthrgs".to_string())
+    }
+
+    #[test]
+    pub fn should_return_the_plugboard() {
+        let s = init_settings();
+        let p = s.get_plugboard();
+        assert_eq!(
+            p.unwrap(),
+            [
                 "bq".to_owned(),
                 "cr".to_owned(),
                 "di".to_owned(),
@@ -376,9 +376,6 @@ mod tests {
                 "gh".to_owned(),
             ]
             .to_vec(),
-        };
-        s.configure(&c);
-        let r = s.get_reflector();
-        assert_eq!(r.unwrap(), "enkqauywjicopblmdxzvfthrgs".to_string())
+        )
     }
 }
