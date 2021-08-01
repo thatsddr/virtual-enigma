@@ -1,28 +1,28 @@
 mod settings;
 
-use crate::settings::{ConfStruct, RotorSettings, Settings};
+use crate::settings::{ConfStruct, RotorInput, Settings};
 
 fn main() {
     let c = ConfStruct {
         reflector: "UKW-B-thin".to_owned(),
-        zus: RotorSettings {
+        zus: RotorInput {
             rot: "gamma".to_owned(),
-            pos: "p".to_owned(),
+            pos: 'p',
             ring: 11,
         },
-        rot3: RotorSettings {
+        rot3: RotorInput {
             rot: "VI".to_owned(),
-            pos: "q".to_owned(),
+            pos: 'q',
             ring: 21,
         },
-        rot2: RotorSettings {
+        rot2: RotorInput {
             rot: "II".to_owned(),
-            pos: "l".to_owned(),
+            pos: 'l',
             ring: 6,
         },
-        rot1: RotorSettings {
+        rot1: RotorInput {
             rot: "IV".to_owned(),
-            pos: "e".to_owned(),
+            pos: 'e',
             ring: 13,
         },
         plugboard: [

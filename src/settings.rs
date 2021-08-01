@@ -1,49 +1,56 @@
 use std::collections::HashMap;
 
 #[derive(Clone, Debug, PartialEq)]
+// the actual rotor with its unique sequence and notches
 pub struct RotorData {
     pub sequence: String,
     pub notches: Vec<String>,
 }
 
-pub struct RotorSettings {
-    pub rot: String,
-    pub pos: String,
-    pub ring: i16,
-}
-
 #[derive(Clone, Debug)]
-pub struct RotorActionableSettings {
+// rotor settings that the application can work with
+pub struct RotorSettings {
     pub rot: String,
     pub pos: i16,
     pub ring: i16,
 }
 
 #[derive(Clone, Debug)]
+// group of rotor settings
 pub struct RotorsConfiguration {
-    pub zusatzwalze: RotorActionableSettings,
-    pub rotor3: RotorActionableSettings,
-    pub rotor2: RotorActionableSettings,
-    pub rotor1: RotorActionableSettings,
+    pub zusatzwalze: RotorSettings,
+    pub rotor3: RotorSettings,
+    pub rotor2: RotorSettings,
+    pub rotor1: RotorSettings,
 }
 
 #[derive(Clone, Debug)]
+// configuration struct with which the program can work
 pub struct Configuration {
     pub reflector: String,
     pub plugboard: Vec<String>,
-    pub rotors: HashMap<String, RotorActionableSettings>,
+    pub rotors: HashMap<String, RotorSettings>,
 }
 
+// input rotor settings
+pub struct RotorInput {
+    pub rot: String,
+    pub pos: char,
+    pub ring: i16,
+}
+
+// input configuration
 pub struct ConfStruct {
     pub reflector: String,
-    pub zus: RotorSettings,
-    pub rot3: RotorSettings,
-    pub rot2: RotorSettings,
-    pub rot1: RotorSettings,
+    pub zus: RotorInput,
+    pub rot3: RotorInput,
+    pub rot2: RotorInput,
+    pub rot1: RotorInput,
     pub plugboard: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
+// everything about the rotor, user configuration and own properties
 pub struct RotorExport {
     pub rotor: RotorData,
     pub starting_position: i16,
@@ -51,6 +58,7 @@ pub struct RotorExport {
 }
 
 #[derive(Clone)]
+// main settings struct
 pub struct Settings {
     pub rotors: HashMap<String, RotorData>,
     pub reflectors: HashMap<String, String>,
@@ -145,6 +153,13 @@ impl Settings {
         panic!("Character {:?} not in alphabet", letter)
     }
 
+    pub fn char_to_position(&self, letter: &char) -> i16 {
+        if let Some(i) = self.alphabet.find(*letter) {
+            return i as i16;
+        };
+        panic!("Character {:?} not in alphabet", letter)
+    }
+
     pub fn number_to_position(&self, num: i16) -> i16 {
         if num > 0 && num < 26 {
             return num - 1;
@@ -156,33 +171,33 @@ impl Settings {
         let mut rotors_map = HashMap::new();
         rotors_map.insert(
             "zusatzwalze".to_owned(),
-            RotorActionableSettings {
+            RotorSettings {
                 rot: conf.zus.rot.clone(),
-                pos: self.letter_to_position(&conf.zus.pos),
+                pos: self.char_to_position(&conf.zus.pos),
                 ring: self.number_to_position(conf.zus.ring),
             },
         );
         rotors_map.insert(
             "rotor3".to_owned(),
-            RotorActionableSettings {
+            RotorSettings {
                 rot: conf.rot3.rot.clone(),
-                pos: self.letter_to_position(&conf.rot3.pos),
+                pos: self.char_to_position(&conf.rot3.pos),
                 ring: self.number_to_position(conf.rot3.ring),
             },
         );
         rotors_map.insert(
             "rotor2".to_owned(),
-            RotorActionableSettings {
+            RotorSettings {
                 rot: conf.rot2.rot.clone(),
-                pos: self.letter_to_position(&conf.rot2.pos),
+                pos: self.char_to_position(&conf.rot2.pos),
                 ring: self.number_to_position(conf.rot2.ring),
             },
         );
         rotors_map.insert(
             "rotor1".to_owned(),
-            RotorActionableSettings {
+            RotorSettings {
                 rot: conf.rot1.rot.clone(),
-                pos: self.letter_to_position(&conf.rot1.pos),
+                pos: self.char_to_position(&conf.rot1.pos),
                 ring: self.number_to_position(conf.rot1.ring),
             },
         );
@@ -260,24 +275,24 @@ mod tests {
         let mut s = Settings::new();
         let c = ConfStruct {
             reflector: "UKW-B-thin".to_owned(),
-            zus: RotorSettings {
+            zus: RotorInput {
                 rot: "gamma".to_owned(),
-                pos: "p".to_owned(),
+                pos: 'p',
                 ring: 11,
             },
-            rot3: RotorSettings {
+            rot3: RotorInput {
                 rot: "VI".to_owned(),
-                pos: "q".to_owned(),
+                pos: 'q',
                 ring: 21,
             },
-            rot2: RotorSettings {
+            rot2: RotorInput {
                 rot: "II".to_owned(),
-                pos: "l".to_owned(),
+                pos: 'l',
                 ring: 6,
             },
-            rot1: RotorSettings {
+            rot1: RotorInput {
                 rot: "IV".to_owned(),
-                pos: "e".to_owned(),
+                pos: 'e',
                 ring: 13,
             },
             plugboard: [
@@ -302,6 +317,13 @@ mod tests {
     fn letter_to_position_works() {
         let s = Settings::new();
         let p = s.letter_to_position(&"d".to_owned());
+        assert_eq!(p, 3);
+    }
+
+    #[test]
+    fn char_to_position_works() {
+        let s = Settings::new();
+        let p = s.char_to_position(&'d');
         assert_eq!(p, 3);
     }
 
