@@ -33,6 +33,20 @@ impl Plugboard {
         }
         return dict;
     }
+
+    pub fn apply(self, text: String) -> String {
+        let chars: Vec<char> = text.chars().collect();
+        let mut output = vec![];
+        for c in chars {
+            if let Some(x) = self.dict.get(&c) {
+                output.push(*x);
+            } else {
+                output.push(c);
+            };
+        }
+        let output_string: String = output.into_iter().collect();
+        output_string
+    }
 }
 
 #[cfg(test)]
@@ -95,5 +109,13 @@ mod tests {
     pub fn should_generate_a_plugboard() {
         let couples = generate_plugboard();
         Plugboard::new(&couples);
+    }
+
+    #[test]
+    pub fn should_swap_letters() {
+        let couples = ["ab".to_owned()].to_vec();
+        let p = Plugboard::new(&couples);
+        let s = p.apply("abcd".to_owned());
+        assert_eq!(s, "bacd".to_string());
     }
 }
