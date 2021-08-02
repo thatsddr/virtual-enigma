@@ -160,7 +160,7 @@ impl Settings {
         panic!("Number {:?} either too big or too small", num)
     }
 
-    pub fn configure(&mut self, conf: &ConfStruct) -> () {
+    pub fn configure(&mut self, conf: &ConfStruct) {
         let mut rotors_map = HashMap::new();
         rotors_map.insert(
             "zusatzwalze".to_owned(),
@@ -200,14 +200,11 @@ impl Settings {
             reflector: conf.reflector.clone(),
             rotors: rotors_map,
         };
-        self.config = Some(config.clone());
+        self.config = Some(config);
     }
 
-    pub fn get_rotor(&self, rotor_name: &String) -> Option<RotorExport> {
-        if rotor_name == &"rotor1".to_owned()
-            || rotor_name == &"rotor2".to_owned()
-            || rotor_name == &"rotor3".to_owned()
-        {
+    pub fn get_rotor(&self, rotor_name: &str) -> Option<RotorExport> {
+        if rotor_name == "rotor1" || rotor_name == "rotor2" || rotor_name == "rotor3" {
             //if a configuration exists
             if let Some(conf) = &self.config {
                 //if the name of the rotors (1-3) is in the rotors hashmap
@@ -249,7 +246,7 @@ impl Settings {
                 return Some(refl.to_string());
             }
         };
-        return None;
+        None
     }
 
     pub fn get_plugboard(&self) -> Option<Vec<String>> {

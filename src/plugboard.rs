@@ -5,7 +5,7 @@ pub struct Plugboard {
 }
 
 impl Plugboard {
-    pub fn new(couples: &Vec<String>) -> Self {
+    pub fn new(couples: &[String]) -> Self {
         if couples.len() < 11 {
             for c in couples {
                 if c.len() != 2 {
@@ -13,7 +13,7 @@ impl Plugboard {
                 }
             }
             let plugboard = Plugboard {
-                dict: Plugboard::dictify(couples.clone()),
+                dict: Plugboard::dictify(couples.to_vec()),
             };
             return plugboard;
         }
@@ -31,7 +31,7 @@ impl Plugboard {
                 panic!("Duplicated letter in the plugboard")
             };
         }
-        return dict;
+        dict
     }
 
     pub fn apply(self, text: String) -> String {
