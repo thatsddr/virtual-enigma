@@ -1,3 +1,4 @@
+mod enigma;
 mod plugboard;
 mod reflector;
 mod rotor;
