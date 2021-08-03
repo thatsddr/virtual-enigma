@@ -4,7 +4,8 @@ mod reflector;
 mod rotor;
 mod settings;
 
-use crate::settings::{ConfStruct, RotorInput, Settings};
+use crate::enigma::Enigma;
+use crate::settings::{ConfStruct, RotorInput};
 
 fn main() {
     let c = ConfStruct {
@@ -44,7 +45,9 @@ fn main() {
         .to_vec(),
     };
 
-    let mut s = Settings::new();
-    s.configure(&c);
-    print!("{:#?}", s.config)
+    let mut s = Enigma::new(c);
+    let r = s.run("have fun using this".to_owned());
+
+    //wccv ykyc mbzk qpyo is expected
+    print!("{:?}", r)
 }
