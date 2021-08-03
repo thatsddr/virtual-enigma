@@ -4,7 +4,7 @@ use std::collections::HashMap;
 // the actual rotor with its unique sequence and notches
 pub struct RotorData {
     pub sequence: String,
-    pub notches: Vec<String>,
+    pub notches: Vec<char>,
 }
 
 #[derive(Clone, Debug)]
@@ -71,35 +71,35 @@ impl Settings {
     pub fn new() -> Self {
         let rotor1 = RotorData {
             sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
-            notches: vec!["r".to_owned()],
+            notches: vec!['r'],
         };
         let rotor2 = RotorData {
             sequence: "ajdksiruxblhwtmcqgznpyfvoe".to_owned(),
-            notches: vec!["f".to_owned()],
+            notches: vec!['f'],
         };
         let rotor3 = RotorData {
             sequence: "bdfhjlcprtxvznyeiwgakmusqo".to_owned(),
-            notches: vec!["w".to_owned()],
+            notches: vec!['w'],
         };
         let rotor4 = RotorData {
             sequence: "esovpzjayquirhxlnftgkdcmwb".to_owned(),
-            notches: vec!["k".to_owned()],
+            notches: vec!['k'],
         };
         let rotor5 = RotorData {
             sequence: "vzbrgityupsdnhlxawmjqofeck".to_owned(),
-            notches: vec!["a".to_owned()],
+            notches: vec!['a'],
         };
         let rotor6 = RotorData {
             sequence: "jpgvoumfyqbenhzrdkasxlictw".to_owned(),
-            notches: vec!["a".to_owned(), "n".to_owned()],
+            notches: vec!['a', 'n'],
         };
         let rotor7 = RotorData {
             sequence: "nzjhgrcxmyswboufaivlpekqdt".to_owned(),
-            notches: vec!["a".to_owned(), "n".to_owned()],
+            notches: vec!['a', 'n'],
         };
         let rotor8 = RotorData {
             sequence: "fkqhtlxocbjspdzramewniuygv".to_owned(),
-            notches: vec!["a".to_owned(), "n".to_owned()],
+            notches: vec!['a', 'n'],
         };
 
         let mut rotors = HashMap::new();
@@ -335,7 +335,7 @@ mod tests {
             Some(RotorExport {
                 rotor: RotorData {
                     sequence: "esovpzjayquirhxlnftgkdcmwb".to_owned(),
-                    notches: vec!["k".to_owned()]
+                    notches: vec!['k']
                 },
                 starting_position: 4,
                 ringstellung: 12
