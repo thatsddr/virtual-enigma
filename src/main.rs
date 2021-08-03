@@ -1,5 +1,6 @@
 mod plugboard;
 mod reflector;
+mod rotor;
 mod settings;
 
 use crate::settings::{ConfStruct, RotorInput, Settings};
