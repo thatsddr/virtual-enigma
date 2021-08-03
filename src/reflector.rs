@@ -11,10 +11,10 @@ impl Reflector {
         }
     }
 
-    pub fn reflect(self, letter: char, zus_step: i32) -> char {
+    pub fn reflect(&self, letter: char, zus_step: i16) -> char {
         if let Some(position) = self.alphabet.find(letter) {
             let chars: Vec<char> = self.sequence.chars().collect();
-            chars[((26 - (zus_step - (position as i32))) % 26) as usize]
+            chars[((26 - (zus_step - (position as i16))) % 26) as usize]
         } else {
             panic!("Character {:?} not in alphabet", letter)
         }
