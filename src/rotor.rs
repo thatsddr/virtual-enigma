@@ -25,8 +25,7 @@ impl Rotor {
         //string to array of chars
         let chars_sequence: Vec<char> = self.sequence.chars().collect();
         //first substring
-        let mut new1: String = chars_sequence
-            [(chars_sequence.len() - self.ringstellung as usize)..]
+        let mut new: String = chars_sequence[(chars_sequence.len() - self.ringstellung as usize)..]
             .into_iter()
             .collect();
         //second ssubstring
@@ -34,9 +33,9 @@ impl Rotor {
             .into_iter()
             .collect();
         // join substrings
-        new1.push_str(&new2);
+        new.push_str(&new2);
         // replace
-        self.sequence = new1
+        self.sequence = new
     }
 
     fn update_steps(&mut self, num: i16) {
@@ -45,6 +44,21 @@ impl Rotor {
         } else {
             self.steps += num
         }
+    }
+
+    pub fn rotate(&mut self, num: i16) {
+        // string to array of characters
+        let chars_sequence: Vec<char> = self.sequence.chars().collect();
+        // first substring
+        let mut new: String = chars_sequence[(num as usize)..].into_iter().collect();
+        // second substring
+        let new2: String = chars_sequence[..(num as usize)].into_iter().collect();
+        // join substrings
+        new.push_str(&new2);
+        // replace
+        self.sequence = new;
+        // update steps
+        self.update_steps(num);
     }
 }
 
@@ -67,21 +81,37 @@ mod tests {
         assert_eq!(rotor.sequence, "rcjekmflgdqvzntowyhxuspaib".to_owned())
     }
 
+    #[test]
     pub fn should_update_steps() {
         let r = RotorExport {
             rotor: RotorData {
                 sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
                 notches: vec!["r".to_owned()],
             },
-            ringstellung: 3,
+            ringstellung: 0,
             starting_position: 0,
         };
         let mut rotor = Rotor::new(r);
         rotor.update_steps(25);
         assert_eq!(rotor.steps, 25);
         rotor.update_steps(2);
-        assert_eq!(rotor.steps, 2);
+        assert_eq!(rotor.steps, 1);
         rotor.update_steps(1);
-        assert_eq!(rotor.steps, 3);
+        assert_eq!(rotor.steps, 2);
+    }
+
+    #[test]
+    pub fn should_rotate() {
+        let r = RotorExport {
+            rotor: RotorData {
+                sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
+                notches: vec!["r".to_owned()],
+            },
+            ringstellung: 0,
+            starting_position: 0,
+        };
+        let mut rotor = Rotor::new(r);
+        rotor.rotate(2);
+        assert_eq!(rotor.sequence, "mflgdqvzntowyhxuspaibrcjek".to_owned());
     }
 }
