@@ -5,7 +5,7 @@ pub struct Rotor {
     sequence: String,
     ringstellung: i16,
     starting_position: i16,
-    steps: i32,
+    steps: i16,
 }
 
 impl Rotor {
@@ -38,6 +38,14 @@ impl Rotor {
         // replace
         self.sequence = new1
     }
+
+    fn update_steps(&mut self, num: i16) {
+        if (self.steps + num) > 25 {
+            self.steps = (self.steps + num) % 26
+        } else {
+            self.steps += num
+        }
+    }
 }
 
 #[cfg(test)]
@@ -57,5 +65,23 @@ mod tests {
         let mut rotor = Rotor::new(r);
         rotor.apply_ringstellung();
         assert_eq!(rotor.sequence, "rcjekmflgdqvzntowyhxuspaib".to_owned())
+    }
+
+    pub fn should_update_steps() {
+        let r = RotorExport {
+            rotor: RotorData {
+                sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
+                notches: vec!["r".to_owned()],
+            },
+            ringstellung: 3,
+            starting_position: 0,
+        };
+        let mut rotor = Rotor::new(r);
+        rotor.update_steps(25);
+        assert_eq!(rotor.steps, 25);
+        rotor.update_steps(2);
+        assert_eq!(rotor.steps, 2);
+        rotor.update_steps(1);
+        assert_eq!(rotor.steps, 3);
     }
 }
