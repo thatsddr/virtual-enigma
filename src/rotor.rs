@@ -91,7 +91,7 @@ impl Rotor {
             if prev_step == 0 {
                 return chars_sequence[index];
             } else {
-                return chars_sequence[(26 - ((prev_step as usize) - index)) % 26];
+                return chars_sequence[((26 - (prev_step - (index as i16))) % 26) as usize];
             };
         } else {
             panic!("Character {:?} not in alphabet", letter)
