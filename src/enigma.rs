@@ -18,7 +18,7 @@ impl Enigma {
         let mut settings = Settings::new();
         settings.configure(&c);
 
-        Enigma {
+        let mut e = Enigma {
             settings: settings.clone(),
             rotor1: Rotor::new(settings.get_rotor("rotor1").unwrap()),
             rotor2: Rotor::new(settings.get_rotor("rotor2").unwrap()),
@@ -26,7 +26,12 @@ impl Enigma {
             zusatzwalze: Rotor::new(settings.get_rotor("zusatzwalze").unwrap()),
             reflector: Reflector::new(settings.get_reflector().unwrap()),
             plugboard: Plugboard::new(&settings.get_plugboard().unwrap()),
-        }
+        };
+        e.rotor1.init();
+        e.rotor2.init();
+        e.rotor3.init();
+        e.zusatzwalze.init();
+        e
     }
 
     pub fn rotate_rotors(&mut self) {
@@ -136,19 +141,18 @@ mod tests {
         for n in 1..100 {
             e.rotate_rotors()
         }
-        assert_eq!(e.rotor2.sequence, "siruxblhwtmcqgznpyfvoeajdk".to_string())
+        assert_eq!(e.rotor2.sequence, "lhwtmcqgznpyfvoeajdksiruxb".to_string())
     }
     #[test]
     fn should_encrypt_the_letter() {
         let mut e = generate_enigma();
         let r = e.encrypt_letter('h');
-        assert_eq!(r, 'z')
+        assert_eq!(r, 'l')
     }
 
     #[test]
     fn should_run() {
         let mut e = generate_enigma();
         let r = e.run(String::from("have fun using this"));
-        panic!("{:?}", r)
     }
 }
