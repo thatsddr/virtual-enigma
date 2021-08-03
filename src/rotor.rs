@@ -6,7 +6,7 @@ pub struct Rotor {
     notches: Vec<char>,
     ringstellung: i16,
     starting_position: i16,
-    steps: i16,
+    pub steps: i16,
 }
 
 impl Rotor {
@@ -84,6 +84,34 @@ impl Rotor {
         // update steps
         self.update_steps(num);
     }
+
+    pub fn left_mov(&mut self, letter: char, prev_step: i16) -> char {
+        if let Some(index) = self.alphabet.find(letter) {
+            let chars_sequence: Vec<char> = self.sequence.chars().collect();
+            if prev_step == 0 {
+                return chars_sequence[index];
+            } else {
+                return chars_sequence[(26 - ((prev_step as usize) - index)) % 26];
+            };
+        } else {
+            panic!("Character {:?} not in alphabet", letter)
+        };
+    }
+
+    pub fn right_mov(&mut self, letter: char) -> char {
+        let alphabet_chars: Vec<char> = self.alphabet.chars().collect();
+
+        if let Some(i1) = self.alphabet.find(letter) {
+            let letter2 = alphabet_chars[(i1 + (self.steps as usize)) % 26];
+            if let Some(i2) = self.sequence.find(letter2) {
+                return alphabet_chars[i2];
+            }
+        };
+        panic!(
+            "Character {:?} not in alphabet or not in the rotor sequence",
+            letter
+        )
+    }
 }
 
 #[cfg(test)]
@@ -152,5 +180,37 @@ mod tests {
         let mut rotor = Rotor::new(r);
         rotor.init();
         assert_eq!(rotor.notches, vec!['x'].to_vec());
+    }
+
+    #[test]
+    fn should_perform_left_mov() {
+        let r = RotorExport {
+            rotor: RotorData {
+                sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
+                notches: vec!['r'],
+            },
+            ringstellung: 1,
+            starting_position: 2,
+        };
+        let mut rotor = Rotor::new(r);
+        rotor.init();
+        let c = rotor.left_mov('a', 0);
+        assert_eq!(c, 'k')
+    }
+
+    #[test]
+    fn should_perform_right_mov() {
+        let r = RotorExport {
+            rotor: RotorData {
+                sequence: "ekmflgdqvzntowyhxuspaibrcj".to_owned(),
+                notches: vec!['r'],
+            },
+            ringstellung: 0,
+            starting_position: 0,
+        };
+        let mut rotor = Rotor::new(r);
+        rotor.init();
+        let c = rotor.right_mov('a');
+        assert_eq!(c, 'u')
     }
 }
