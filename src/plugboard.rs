@@ -34,7 +34,7 @@ impl Plugboard {
         dict
     }
 
-    pub fn apply(self, text: String) -> String {
+    pub fn apply(&mut self, text: String) -> String {
         let chars: Vec<char> = text.chars().collect();
         let mut output = vec![];
         for c in chars {
@@ -114,7 +114,7 @@ mod tests {
     #[test]
     pub fn should_swap_letters() {
         let couples = ["ab".to_owned()].to_vec();
-        let p = Plugboard::new(&couples);
+        let mut p = Plugboard::new(&couples);
         let s = p.apply("abcd".to_owned());
         assert_eq!(s, "bacd".to_string());
     }
