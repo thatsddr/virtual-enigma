@@ -95,7 +95,7 @@ impl Enigma {
             self.rotor3.alphabet.to_uppercase(),
             self.rotor3.sequence.to_uppercase(),
             v4.to_uppercase(),
-            self.rotor2.steps
+            self.rotor3.steps
         );
         let v5 = self.reflector.reflect(v4, self.zusatzwalze.steps);
         println!(
@@ -132,6 +132,7 @@ impl Enigma {
             self.rotor1.sequence.to_uppercase(),
             v9.to_uppercase(),
         );
+        println!("--------------------------\n");
         v9
     }
 
