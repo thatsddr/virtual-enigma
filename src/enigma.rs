@@ -228,6 +228,7 @@ mod tests {
     #[test]
     fn should_run() {
         let mut e = generate_enigma();
-        let r = e.run(String::from("have fun using this"), false);
+        let r = e.run(String::from("hi"), false);
+        assert_eq!(r, "wx".to_owned())
     }
 }
