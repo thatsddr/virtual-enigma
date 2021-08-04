@@ -59,7 +59,9 @@ impl Rotor {
         // join substrings
         new.push_str(&new2);
         // replace
-        self.sequence = new
+        self.sequence = new;
+        // update steps
+        self.steps = 26 - self.ringstellung;
     }
 
     fn update_steps(&mut self, num: i16) {
