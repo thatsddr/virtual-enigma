@@ -92,8 +92,8 @@ impl Enigma {
         let v4 = self.zusatzwalze.left_mov(v3, self.rotor3.steps);
         println!(
             "{:?}\n{:?}\nAfter zusatzwalze: {:?}\nprev: {:?}\n",
-            self.rotor3.alphabet.to_uppercase(),
-            self.rotor3.sequence.to_uppercase(),
+            self.zusatzwalze.alphabet.to_uppercase(),
+            self.zusatzwalze.sequence.to_uppercase(),
             v4.to_uppercase(),
             self.rotor3.steps
         );
