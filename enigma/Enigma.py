@@ -46,7 +46,7 @@ class Enigma:
          print(f"{self.rotor3.alphabet.upper()}\n{self.rotor3.rotor.upper()}\nAfter rotor 3: {v3.upper()}\nprev: {self.rotor2.steps}\n")
          v4 = self.zusatzwalze.left_mov(v3, self.rotor3.steps)
          print(f"{self.zusatzwalze.alphabet.upper()}\n{self.zusatzwalze.rotor.upper()}\nAfter zusatzwalze: {v4.upper()}\nprev: {self.rotor3.steps}\n")
-         v5 = self.reflector.reflect_letter(v4)
+         v5 = self.reflector.reflect(v4, self.zusatzwalze.steps)
          print(f"{self.rotor1.alphabet}\n{self.reflector.type}\nAfter reflector: {v5.upper()}\n")
          v6 = self.zusatzwalze.right_mov(v5)
          print(f"{self.zusatzwalze.rotor.upper()}\n{self.zusatzwalze.alphabet.upper()}\nAfter inversed zusatzwalze: {v6.upper()}\n")
