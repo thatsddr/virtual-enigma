@@ -1,7 +1,7 @@
 use crate::settings::{RotorData, RotorExport};
 
 pub struct Rotor {
-    alphabet: String,
+    pub alphabet: String,
     pub sequence: String,
     pub notches: Vec<char>,
     ringstellung: i16,

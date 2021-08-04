@@ -1,6 +1,6 @@
 pub struct Reflector {
-    alphabet: String,
-    sequence: String,
+    pub alphabet: String,
+    pub sequence: String,
 }
 
 impl Reflector {

@@ -65,7 +65,77 @@ impl Enigma {
         v9
     }
 
-    pub fn run(&mut self, text: String) -> String {
+    fn encrypt_letter_debug(&mut self, letter: char) -> char {
+        let v1 = self.rotor1.left_mov(letter, 0);
+        println!(
+            "{:?}\n{:?}\nAfter rotor 1: {:?}\n",
+            self.rotor1.alphabet.to_uppercase(),
+            self.rotor1.sequence.to_uppercase(),
+            v1.to_uppercase()
+        );
+        let v2 = self.rotor2.left_mov(v1, self.rotor1.steps);
+        println!(
+            "{:?}\n{:?}\nAfter rotor 2: {:?}\nprev: {:?}\n",
+            self.rotor2.alphabet.to_uppercase(),
+            self.rotor2.sequence.to_uppercase(),
+            v2.to_uppercase(),
+            self.rotor1.steps
+        );
+        let v3 = self.rotor3.left_mov(v2, self.rotor2.steps);
+        println!(
+            "{:?}\n{:?}\nAfter rotor 3: {:?}\nprev: {:?}\n",
+            self.rotor3.alphabet.to_uppercase(),
+            self.rotor3.sequence.to_uppercase(),
+            v3.to_uppercase(),
+            self.rotor2.steps
+        );
+        let v4 = self.zusatzwalze.left_mov(v3, self.rotor3.steps);
+        println!(
+            "{:?}\n{:?}\nAfter zusatzwalze: {:?}\nprev: {:?}\n",
+            self.rotor3.alphabet.to_uppercase(),
+            self.rotor3.sequence.to_uppercase(),
+            v4.to_uppercase(),
+            self.rotor2.steps
+        );
+        let v5 = self.reflector.reflect(v4, self.zusatzwalze.steps);
+        println!(
+            "{:?}\n{:?}\nAfter reflector: {:?}\n",
+            self.reflector.alphabet.to_uppercase(),
+            self.reflector.sequence.to_uppercase(),
+            v5.to_uppercase(),
+        );
+        let v6 = self.zusatzwalze.right_mov(v5);
+        println!(
+            "{:?}\n{:?}\nAfter inversed zusatzwalze: {:?}\n",
+            self.zusatzwalze.alphabet.to_uppercase(),
+            self.zusatzwalze.sequence.to_uppercase(),
+            v6.to_uppercase(),
+        );
+        let v7 = self.rotor3.right_mov(v6);
+        println!(
+            "{:?}\n{:?}\nAfter inversed rotor3: {:?}\n",
+            self.rotor3.alphabet.to_uppercase(),
+            self.rotor3.sequence.to_uppercase(),
+            v7.to_uppercase(),
+        );
+        let v8 = self.rotor2.right_mov(v7);
+        println!(
+            "{:?}\n{:?}\nAfter inversed rotor2: {:?}\n",
+            self.rotor2.alphabet.to_uppercase(),
+            self.rotor2.sequence.to_uppercase(),
+            v8.to_uppercase(),
+        );
+        let v9 = self.rotor1.right_mov(v8);
+        println!(
+            "{:?}\n{:?}\nAfter inversed rotor1: {:?}\n",
+            self.rotor1.alphabet.to_uppercase(),
+            self.rotor1.sequence.to_uppercase(),
+            v9.to_uppercase(),
+        );
+        v9
+    }
+
+    pub fn run(&mut self, text: String, debug: bool) -> String {
         let to_process = self.plugboard.apply(text);
         let chars_text: Vec<char> = to_process.chars().collect();
         let mut temp = vec![];
@@ -74,7 +144,11 @@ impl Enigma {
             if self.settings.alphabet.contains(chars_text[i]) {
                 temp_length += 1;
                 self.rotate_rotors();
-                temp.push(self.encrypt_letter(chars_text[i]));
+                if debug == false {
+                    temp.push(self.encrypt_letter(chars_text[i]));
+                } else {
+                    temp.push(self.encrypt_letter_debug(chars_text[i]));
+                }
                 if temp_length % 4 == 0 {
                     temp_length = 0;
                     temp.push(' ');
@@ -153,6 +227,6 @@ mod tests {
     #[test]
     fn should_run() {
         let mut e = generate_enigma();
-        let r = e.run(String::from("have fun using this"));
+        let r = e.run(String::from("have fun using this"), false);
     }
 }
