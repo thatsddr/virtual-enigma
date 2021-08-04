@@ -46,7 +46,7 @@ fn main() {
     };
 
     let mut s = Enigma::new(c);
-    let r = s.run("hi".to_owned(), true);
+    let r = s.run("have fun using this".to_owned(), true);
 
     //wccv ykyc mbzk qpyo is expected
     print!("{:?}", r)
