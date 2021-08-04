@@ -137,7 +137,7 @@ impl Enigma {
     }
 
     pub fn run(&mut self, text: String, debug: bool) -> String {
-        let to_process = self.plugboard.apply(text);
+        let to_process = self.plugboard.apply(text.to_lowercase());
         let chars_text: Vec<char> = to_process.chars().collect();
         let mut temp = vec![];
         let mut temp_length: i32 = 0;
