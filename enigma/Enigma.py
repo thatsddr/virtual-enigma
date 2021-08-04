@@ -37,7 +37,7 @@ class Enigma:
         v9 = self.rotor1.right_mov(v8)
         return v9
     
-    def log_encypt(self, letter):
+    def log_encrypt(self, letter):
          v1=self.rotor1.left_mov(letter)
          print(f"{self.rotor1.alphabet.upper()}\n{self.rotor1.rotor.upper()}\nAfter rotor 1: {v1.upper()}\n")
          v2= self.rotor2.left_mov(v1, self.rotor1.steps)
