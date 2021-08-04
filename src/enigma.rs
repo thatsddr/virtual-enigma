@@ -68,24 +68,27 @@ impl Enigma {
     fn encrypt_letter_debug(&mut self, letter: char) -> char {
         let v1 = self.rotor1.left_mov(letter, 0);
         println!(
-            "{:?}\n{:?}\nAfter rotor 1: {:?}\n",
+            "{:?}\n{:?} ({:?})\nAfter rotor 1: {:?}\n",
             self.rotor1.alphabet.to_uppercase(),
             self.rotor1.sequence.to_uppercase(),
+            self.rotor1.notches,
             v1.to_uppercase()
         );
         let v2 = self.rotor2.left_mov(v1, self.rotor1.steps);
         println!(
-            "{:?}\n{:?}\nAfter rotor 2: {:?}\nprev: {:?}\n",
+            "{:?}\n{:?} ({:?})\nAfter rotor 2: {:?}\nprev: {:?}\n",
             self.rotor2.alphabet.to_uppercase(),
             self.rotor2.sequence.to_uppercase(),
+            self.rotor2.notches,
             v2.to_uppercase(),
             self.rotor1.steps
         );
         let v3 = self.rotor3.left_mov(v2, self.rotor2.steps);
         println!(
-            "{:?}\n{:?}\nAfter rotor 3: {:?}\nprev: {:?}\n",
+            "{:?}\n{:?} ({:?})\nAfter rotor 3: {:?}\nprev: {:?}\n",
             self.rotor3.alphabet.to_uppercase(),
             self.rotor3.sequence.to_uppercase(),
+            self.rotor3.notches,
             v3.to_uppercase(),
             self.rotor2.steps
         );
