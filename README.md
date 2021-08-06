@@ -4,36 +4,50 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/thatsddr/virtual-enigma)
 ![GitHub](https://img.shields.io/github/license/thatsddr/virtual-enigma)
 
-Python3 replica of the enigma M4 "Shark" machine.
+Rust replica of the enigma M4 "Shark" machine.
 
 ## Project Status
 
 This project is completed. The outputs of this enigma simulator match those of other online simulators.
 
 ## Usage
-Prerequisites: ```python 3```.
+Prerequisites: ```rust```. [Here](https://doc.rust-lang.org/book/ch01-01-installation.html) you can find the official installation guide.
 
 After downloading the code:
 
-1) Go in ```enigma/main.py``` and create a configuration object with the following structure, editing the values in < angular brackets >:
+1) Go to ```src/main.rs``` and create a configuration object with the following structure, editing the values in < angular brackets >:
 
-        configuration = {
-                "rotors": {
-                    "rot1": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "rot2": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "rot3": {"rotor": rotors[<range I - VIII, string>], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>},
-                    "zus": {"rotor": zusatzwalze[<"gamma" or "beta">], "starting_pos": <range 1-26 (int), or a-z (sting)>, "ringstellung": <range 1-26 (int), or a-z (sting)>}
+        let configuration = ConfStruct {
+                reflector: <"UKW-B-thin" or "UKW-C-thin" (String)>,
+                zus: RotorInput {
+                        rot: <"beta" or "gamma" (String)>,
+                        pos: <'a'-'z' (char)>,
+                        ring: <1-26 (i16)>
                 },
-                "reflector": reflectors[<"UKW-B-thin" or "UKW-C-thin">],
-                "plugboard": [<max 10 couples of letters, as string>]
+                rot3: RotorInput {
+                        rot: <"beta" or "gamma" (String)>,
+                        pos: <'a'-'z' (char)>,
+                        ring: <1-26 (i16)>
+                },
+                rot2: RotorInput {
+                        rot: <"beta" or "gamma" (String)>,
+                        pos: <'a'-'z' (char)>,
+                        ring: <1-26 (i16)>
+                },
+                rot1: RotorInput {
+                        rot: <"beta" or "gamma" (String)>,
+                        pos: <'a'-'z' (char)>,
+                        ring: <1-26 (i16)>
+                },
+                plugboard: [<max 10 couples of letters, with no repeated letters (Vec<String>)>],
         }
 
-2) Create an instance of enigma and pass the configuration object as the first parameter and the text you want to encode as the second parameter, e.g.:
-`
-        myEnigma = Enigma(configuration)
-`;
-3) Run the simulation and print the result, e.g.:
-`
-        print(myEnigma.run("your text here"))
-`;
-4) Run the python file (by running ```python3 main.py```) and you will see the output of the encryption in your terminal.
+2) Create an instance of enigma and pass the configuration object, e.g.:
+
+        let mut myEnigma = Enigma::new(configuration);
+
+3) Use the ```.run()``` method to run the simulation. The method accepts 2 arguents: the text to encode, and a boolenan to run the encoding in normal mode (false) or debug mode(true) e.g.:
+
+        println!(myEnigma.run(String::from("your text here"), false));
+
+4) Run the rust file (by running ```cargo run``` in the ```src``` folder) and you will see the output of the encryption in your terminal.
